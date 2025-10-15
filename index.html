@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Tournament Pro - Gestor Profesional de Torneos</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Indicator -->
+    <div id="loading-indicator" class="loading-indicator">
+        <div class="loading-spinner"></div>
+        <p>Cargando ML Tournament Pro...</p>
+        <div class="loading-progress">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-logs" id="loading-logs">
+            <div class="log-item">Iniciando aplicación...</div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header con navegación -->
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>ML Tournament Pro</h1>
+                        <p>Gestión Profesional de Torneos</p>
+                    </div>
+                </div>
+                
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-tab="tournament"><i class="fas fa-home"></i> Torneo</a></li>
+                        <li><a href="#" class="nav-link" data-tab="teams"><i class="fas fa-users"></i> Equipos</a></li>
+                        <li><a href="#" class="nav-link" data-tab="players"><i class="fas fa-user"></i> Jugadores</a></li>
+                        <li><a href="#" class="nav-link" data-tab="brackets"><i class="fas fa-sitemap"></i> Brackets</a></li>
+                        <li><a href="#" class="nav-link" data-tab="standings"><i class="fas fa-list-ol"></i> Posiciones</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="user-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Exportar
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- Pestaña de Torneo -->
+            <section id="tournament-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Información del Torneo</h2>
+                    <p>Configura los detalles principales de tu torneo</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card card-form">
+                        <div class="card-header">
+                            <h3>Configuración del Torneo</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="tournament-form">
+                                <div class="form-group">
+                                    <label for="tournament-name">Nombre del Torneo</label>
+                                    <input type="text" id="tournament-name" placeholder="Ej: Copa Mobile Legends 2023" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="tournament-date">Fecha de Inicio</label>
+                                        <input type="date" id="tournament-date" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tournament-format">Formato</label>
+                                        <select id="tournament-format">
+                                            <option value="single-elimination">Eliminación Simple</option>
+                                            <option value="double-elimination">Eliminación Doble</option>
+                                            <option value="round-robin">Todos contra Todos</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tournament-description">Descripción</label>
+                                    <textarea id="tournament-description" rows="4" placeholder="Describe tu torneo..."></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-save"></i> Guardar Configuración
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3>Resumen del Torneo</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="tournament-summary">
+                                <div class="summary-placeholder">
+                                    <i class="fas fa-info-circle"></i>
+                                    <p>Configura la información del torneo para ver el resumen</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pestaña de Equipos -->
+            <section id="teams-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Gestión de Equipos</h2>
+                    <p>Administra los equipos participantes en el torneo</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card card-form">
+                        <div class="card-header">
+                            <h3>Añadir Nuevo Equipo</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="team-form">
+                                <div class="form-group">
+                                    <label for="team-name">Nombre del Equipo</label>
+                                    <input type="text" id="team-name" placeholder="Ej: Legends Pro" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-tag">Tag del Equipo</label>
+                                    <input type="text" id="team-tag" placeholder="Ej: LGP" maxlength="4" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-logo">Logo del Equipo (URL)</label>
+                                    <input type="url" id="team-logo" placeholder="https://ejemplo.com/logo.png">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-plus"></i> Añadir Equipo
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-list">
+                        <div class="card-header">
+                            <h3>Equipos Registrados</h3>
+                            <div class="card-actions">
+                                <span class="teams-count">0 equipos</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="team-list" id="team-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-users"></i>
+                                    <p>No hay equipos registrados aún</p>
+                                    <button class="btn btn-outline">Añadir primer equipo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pestaña de Jugadores -->
+            <section id="players-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Gestión de Jugadores</h2>
+                    <p>Administra los jugadores y sus estadísticas</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card card-form">
+                        <div class="card-header">
+                            <h3>Añadir Nuevo Jugador</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="player-form">
+                                <div class="form-group">
+                                    <label for="player-name">Nombre del Jugador</label>
+                                    <input type="text" id="player-name" placeholder="Ej: Juan Pérez" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="player-ign">Nombre en el Juego (IGN)</label>
+                                    <input type="text" id="player-ign" placeholder="Ej: MLPro123" required>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="player-team">Equipo</label>
+                                        <select id="player-team" required>
+                                            <option value="">Selecciona un equipo</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="player-role">Rol Principal</label>
+                                        <select id="player-role">
+                                            <option value="Tank">Tank</option>
+                                            <option value="Fighter">Fighter</option>
+                                            <option value="Assassin">Assassin</option>
+                                            <option value="Mage">Mage</option>
+                                            <option value="Marksman">Marksman</option>
+                                            <option value="Support">Support</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-plus"></i> Añadir Jugador
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-list">
+                        <div class="card-header">
+                            <h3>Jugadores Registrados</h3>
+                            <div class="card-actions">
+                                <span class="players-count">0 jugadores</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="player-list" id="player-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-user"></i>
+                                    <p>No hay jugadores registrados aún</p>
+                                    <button class="btn btn-outline">Añadir primer jugador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pestaña de Brackets -->
+            <section id="brackets-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Brackets del Torneo</h2>
+                    <p>Visualiza y gestiona el progreso del torneo</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card card-form">
+                        <div class="card-header">
+                            <h3>Configuración de Brackets</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="bracket-form">
+                                <div class="form-group">
+                                    <label for="bracket-type">Tipo de Bracket</label>
+                                    <select id="bracket-type">
+                                        <option value="single-elimination">Eliminación Simple</option>
+                                        <option value="double-elimination">Eliminación Doble</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="team-count">Número de Equipos</label>
+                                    <select id="team-count">
+                                        <option value="2">2 Equipos</option>
+                                        <option value="4">4 Equipos</option>
+                                        <option value="8">8 Equipos</option>
+                                        <option value="16">16 Equipos</option>
+                                        <option value="32">32 Equipos</option>
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fas fa-sitemap"></i> Generar Bracket
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-bracket">
+                        <div class="card-header">
+                            <h3>Bracket del Torneo</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="bracket-container">
+                                <div class="bracket" id="tournament-bracket">
+                                    <div class="bracket-placeholder">
+                                        <i class="fas fa-sitemap"></i>
+                                        <p>Genera el bracket para visualizarlo aquí</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Pestaña de Tabla de Posiciones -->
+            <section id="standings-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Tabla de Posiciones</h2>
+                    <p>Seguimiento de equipos y estadísticas de jugadores</p>
+                </div>
+                
+                <div class="content-grid">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h3>Clasificación de Equipos</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-container">
+                                <table class="standings-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Pos</th>
+                                            <th>Equipo</th>
+                                            <th>PJ</th>
+                                            <th>G</th>
+                                            <th>P</th>
+                                            <th>Puntos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="standings-body">
+                                        <tr class="empty-row">
+                                            <td colspan="6">No hay equipos registrados</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-stats">
+                        <div class="card-header">
+                            <h3>Estadísticas de Jugadores</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="player-stats" id="player-stats">
+                                <div class="empty-state">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <p>No hay estadísticas disponibles</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>ML Tournament Pro &copy; 2023 - Sistema de Gestión de Torneos</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Ayuda</a>
+                    <a href="#">Términos</a>
+                    <a href="#">Privacidad</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/tournament.js"></script>
+    <script src="js/teams.js"></script>
+    <script src="js/players.js"></script>
+    <script src="js/brackets.js"></script>
+    <script src="js/standings.js"></script>
+</body>
+</html>
